@@ -1,13 +1,19 @@
 import pandas as pd
 import numpy as np
 import json
+import os
 
 # Load the data as a pandas dataframe
 
 class DataCleaning:
     
     def __init__(self):
-        self.data = pd.read_csv('data/data.csv').astype(str)
+        self.data = pd.DataFrame([])
+        for filename in os.listdir('data'):
+            if filename.endswith('.csv'):
+                temp = pd.read_csv('data/' + filename).astype(str)
+                self.data = pd.concat([self.data, temp])
+        self.data = self.data.astype(str)
     
     def stringify(self, group):
         tempUnMod = group['Course Name'].iloc[0] + " Originals"
@@ -36,14 +42,16 @@ class DataCleaning:
         strings = {}
         grouped = self.data.groupby('File Name')
         for name, group in grouped:
-            # print(f"File Name: {name}")
+            print(f"File Name: {name}")
             # print(f"Group:\n{group}\n")
-            strings[group['Course Name'].iloc[0]] = self.stringify(group)
+            strings[f"{name}_{group['Course Name'].iloc[0]}"] = self.stringify(group)
+        print(strings)
         return strings
 
     def jsonify(self, dict):
         json_list = []
         for course_name, content in dict.items():
+            print(f"Course Name: {course_name}")
             # Construct JSON structure
             json_data = {
                 "messages": [
