@@ -10,6 +10,6 @@ client = openai.OpenAI(
 )
 
 client.fine_tuning.jobs.create(
-    training_file="Data/cleanData.json",
+    training_file="data/cleandata.json",
     model="gpt-3.5-turbo"
 )

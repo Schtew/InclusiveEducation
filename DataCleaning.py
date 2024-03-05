@@ -7,7 +7,7 @@ import json
 class DataCleaning:
     
     def __init__(self):
-        self.data = pd.read_csv('Data/data.csv').astype(str)
+        self.data = pd.read_csv('data/data.csv').astype(str)
     
     def stringify(self, group):
         tempUnMod = group['Course Name'].iloc[0] + " Originals"
@@ -54,7 +54,7 @@ class DataCleaning:
                 ]
             }
             json_list.append(json_data)
-        with open("Data/cleanData.json", "w") as json_file:
+        with open("data/cleandata.json", "w") as json_file:
             json.dump(json_list, json_file, indent=4)
 
 main = DataCleaning()

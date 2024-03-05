@@ -6,7 +6,7 @@ from collections import defaultdict
 #Class adapted from https://cookbook.openai.com/examples/chat_finetuning_data_prep
 class Validator: 
     def __init__(self):
-        with open("Data/cleanData.json", 'r', encoding='utf-8') as f:
+        with open("data/cleandata.json", 'r', encoding='utf-8') as f:
             self.dataset = json.load(f)
         self.encoding = tiktoken.get_encoding("cl100k_base")
         
@@ -114,7 +114,7 @@ class Validator:
             n_epochs = max(MIN_DEFAULT_EPOCHS, MAX_TARGET_EXAMPLES // n_train_examples)
 
         n_billing_tokens_in_dataset = sum(min(MAX_TOKENS_PER_EXAMPLE, length) for length in self.convo_lens)
-        print(f"Dataset has ~{n_billing_tokens_in_dataset} tokens that will be charged for during training")
+        print(f"dataset has ~{n_billing_tokens_in_dataset} tokens that will be charged for during training")
         print(f"By default, you'll train for {n_epochs} epochs on this dataset")
         print(f"By default, you'll be charged for ~{n_epochs * n_billing_tokens_in_dataset} tokens")
         print(f"At gpt-3.5-turbo costs, this would be ~{(n_epochs * n_billing_tokens_in_dataset * 8) / 1000000:.2f} USD")
